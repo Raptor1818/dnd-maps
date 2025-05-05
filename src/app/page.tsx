@@ -1,11 +1,12 @@
-import React from 'react'
+import { auth } from "@/server/auth";
+import Navbar from "./components/Navbar/Navbar";
 
-type Props = {}
+export default async function Home() {
+  const session = await auth();
 
-const Home = (props: Props) => {
   return (
-    <div>Home</div>
+    <div>
+      <Navbar session={session} />
+    </div>
   )
 }
-
-export default Home

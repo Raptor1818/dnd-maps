@@ -18,6 +18,11 @@ interface Props {
 }
 
 const MapCard = ({ map, isDM }: Props) => {
+  function byteArrayToImage(byteArray: Uint8Array, mimeType: string): string {
+    const blob = new Blob([byteArray], { type: mimeType });
+    return URL.createObjectURL(blob);
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -27,7 +32,7 @@ const MapCard = ({ map, isDM }: Props) => {
       <CardContent className='relative'>
         <AspectRatio ratio={16 / 9}>
           <Image
-            src={map}
+            src={byteArrayToImage(map.image, "image/webp")}
             alt={map.name}
             fill
             className="h-full w-full rounded-md object-cover"

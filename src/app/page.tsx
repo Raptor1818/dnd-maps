@@ -9,7 +9,7 @@ export default async function Home() {
 
   return (
     <>
-      <Navbar session={session} />
+      <Navbar session={session} isDM={isDM} />
       <main className="w-full h-full flex flex-col justify-center items-center pt-18 md:pt-22 pb-8 px-4 md:px-8 overflow-scroll">
         <MapGrid isDM={isDM} />
       </main>

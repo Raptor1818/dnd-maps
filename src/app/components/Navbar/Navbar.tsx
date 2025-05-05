@@ -10,7 +10,7 @@ interface Props {
 
 const Navbar = ({ session }: Props) => {
   return (
-    <nav className='fixed w-full bg-background border border-x-0 border-t-0 border-b-border px-4 py-2 md:px-8 md:py-4 flex items-center justify-between'>
+    <nav className='z-[100] fixed w-full bg-background border border-x-0 border-t-0 border-b-border px-4 py-2 md:px-8 md:py-4 flex items-center justify-between'>
       <ModeToggle />
       <Link
         href={session ? "/api/auth/signout" : "/api/auth/signin"}

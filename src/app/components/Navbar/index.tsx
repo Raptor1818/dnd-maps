@@ -1,5 +1,5 @@
 import React from 'react'
-import { ModeToggle } from '../ModeToggle/ModeToggle'
+import { ModeToggle } from '../ModeToggle'
 import clsx from 'clsx';
 
 import Link from 'next/link';

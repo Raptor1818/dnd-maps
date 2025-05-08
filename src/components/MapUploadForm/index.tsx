@@ -12,53 +12,71 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { useForm } from "react-hook-form";
-import { string, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@/trpc/react";
+import { useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
-// Define Zod schema
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().optional(),
   image: z
-    .instanceof(File)
-    .refine((file) => file.size > 0, "Image file is required"),
+    .custom<File>((f) => f instanceof File && f.size > 0, {
+      message: "Image file is required",
+    }),
 });
 
-// Infer type
 type FormValues = z.infer<typeof formSchema>;
 
 export function MapUploadForm() {
-  //const uploadMap = api.map.uploadMap.useMutation();
-
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       description: "",
-      //image: undefined as unknown as File,
+      image: undefined as unknown as File,
     },
   });
 
-  // Submit handler
-  const onSubmit = async (values: FormValues) => {
-    // uploadMap.mutate({
-    //   name: values.name,
-    //   description: values.description ?? "",
-    //   visible: false,
-    //   createdAt: new Date(),
-    //   image_url: string,
-    // });
-  };
+  const uploadMap = api.map.uploadMap.useMutation();
+  const [uploading, setUploading] = useState(false);
 
-  // Convert to base64
-  const toBase64 = (file: File): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = reject;
-    });
+  const onSubmit = async (values: FormValues) => {
+    try {
+      setUploading(true);
+
+      const filePath = `${Date.now()}-${values.image.name}`;
+      const { error } = await supabase.storage
+        .from("dnd-maps")
+        .upload(filePath, values.image, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      if (error) throw error;
+
+      const publicUrl = supabase.storage
+        .from("dnd-maps")
+        .getPublicUrl(filePath).data.publicUrl;
+
+      await uploadMap.mutateAsync({
+        name: values.name,
+        description: values.description ?? "",
+        image_url: publicUrl,
+        visible: false,
+        createdAt: new Date(),
+      });
+
+      form.reset();
+      alert("Map uploaded successfully!");
+    } catch (e) {
+      console.error(e);
+      alert("Upload failed.");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   return (
     <Form {...form}>
@@ -92,7 +110,7 @@ export function MapUploadForm() {
             </FormItem>
           )}
         />
-        {/* <FormField
+        <FormField
           control={form.control}
           name="image"
           render={({ field: { onChange, ...field } }) => (
@@ -110,8 +128,10 @@ export function MapUploadForm() {
               <FormMessage />
             </FormItem>
           )}
-        /> */}
-        <Button type="submit">Upload Map</Button>
+        />
+        <Button type="submit" disabled={uploading}>
+          {uploading ? "Uploading..." : "Upload Map"}
+        </Button>
       </form>
     </Form>
   );

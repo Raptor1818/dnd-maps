@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Checkbox } from "@/components/ui/checkbox"

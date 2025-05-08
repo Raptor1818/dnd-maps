@@ -15,7 +15,7 @@ const Navbar = ({ session, isDM }: Props) => {
     <nav className='z-[100] fixed w-full bg-background border border-x-0 border-t-0 border-b-border px-4 py-2 md:px-8 md:py-4 flex items-center justify-between'>
       <ModeToggle />
       <div className='flex items-center gap-2'>
-        {isDM && <UploadDialog />}
+        {!isDM && <UploadDialog />}
         <Link
           href={session ? "/api/auth/signout" : "/api/auth/signin"}
           className={clsx(

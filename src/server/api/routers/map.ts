@@ -14,26 +14,27 @@ export type MapType = {
 
 // TODO upload to supabase
 export const mapRouter = createTRPCRouter({
-  // uploadMap: publicProcedure
-  //   .input(z.object({
-  //     name: z.string(),
-  //     description: z.string(),
-  //     image_url: z.string(),
-  //     visible: z.boolean(),
-  //     createdAt: z.date(),
-  //   }))
-  //   .mutation(async ({ ctx, input }) => {
-
-  //     return await ctx.db.map.create({
-  //       data: {
-  //         name: input.name,
-  //         description: input.description,
-  //         image: input.image,
-  //         visible: input.visible,
-  //         createdAt: new Date(),
-  //       },
-  //     });
-  //   }),
+  uploadMap: publicProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        description: z.string().optional(),
+        image_url: z.string().url(),
+        visible: z.boolean(),
+        createdAt: z.date(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      await ctx.db.map.create({
+        data: {
+          name: input.name,
+          description: input.description,
+          image_url: input.image_url,
+          visible: input.visible,
+          createdAt: input.createdAt,
+        },
+      });
+    }),
 
   getAllMaps: publicProcedure.query(async ({ ctx }) => {
     return await ctx.db.map.findMany({

@@ -49,4 +49,36 @@ export const mapRouter = createTRPCRouter({
       orderBy: { createdAt: "desc" },
     });
   }),
+
+  deleteMap: publicProcedure
+    .input(
+      z.object({
+        id: z.number(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      await ctx.db.map.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
+
+  editVisibilityMap: publicProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        visible: z.boolean(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      await ctx.db.map.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          visible: input.visible,
+        },
+      });
+    }),
 });

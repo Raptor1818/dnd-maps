@@ -10,6 +10,8 @@ export type MapType = {
   createdAt: Date;
 }
 
+//process.env.SUPABASE_URL + "/storage/v1/object/public/dnd-maps/<filename>"
+
 // TODO upload to supabase
 export const mapRouter = createTRPCRouter({
   // uploadMap: publicProcedure

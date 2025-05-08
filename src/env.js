@@ -18,6 +18,7 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
     DM_ID: z.string(),
+    SUPABASE_URL: z.string(),
   },
 
   /**
@@ -40,6 +41,7 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     DM_ID: process.env.DM_ID,
+    SUPABASE_URL: process.env.SUPABASE_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

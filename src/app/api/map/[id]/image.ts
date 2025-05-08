@@ -8,11 +8,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     where: { id: Number(id) },
   });
 
-  if (!map || !map.image) {
+  if (!map || !map.image_url) {
     res.status(404).send("Not found");
     return;
   }
 
   res.setHeader("Content-Type", "image/webp");
-  res.send(map.image);
+  res.send(map.image_url);
 }

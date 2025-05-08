@@ -1,6 +1,16 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
+export type MapType = {
+  id: number;
+  name: string;
+  description: string;
+  image: Uint8Array;
+  visible: boolean;
+  createdAt: Date;
+}
+
+
 export const mapRouter = createTRPCRouter({
   uploadMap: publicProcedure
     .input(z.object({
@@ -30,6 +40,7 @@ export const mapRouter = createTRPCRouter({
         id: true,
         name: true,
         description: true,
+        image: true,
         visible: true,
         createdAt: true,
       },

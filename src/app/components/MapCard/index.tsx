@@ -1,5 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { Checkbox } from "@/components/ui/checkbox"
+import type { MapType } from '@/server/api/routers/map'
 
 import {
   Card,
@@ -9,11 +12,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { Checkbox } from "@/components/ui/checkbox"
 
 interface Props {
-  map: any;
+  map: MapType;
   isDM: boolean;
 }
 
@@ -29,13 +30,13 @@ const MapCard = ({ map, isDM }: Props) => {
         <CardTitle><h1>{map.name}</h1></CardTitle>
         <CardDescription>{map.description}</CardDescription>
       </CardHeader>
-      <CardContent className='relative'>
+      <CardContent>
         <AspectRatio ratio={16 / 9}>
           <Image
             src={byteArrayToImage(map.image, "image/webp")}
             alt={map.name}
             fill
-            className="h-full w-full rounded-md object-cover"
+            className="object-cover rounded-sm"
           />
         </AspectRatio>
       </CardContent>
@@ -53,7 +54,6 @@ const MapCard = ({ map, isDM }: Props) => {
         </CardFooter>
       )}
     </Card>
-
   )
 }
 

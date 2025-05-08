@@ -2,8 +2,6 @@ import React from 'react'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
@@ -11,9 +9,9 @@ import { Button } from '@/components/ui/button'
 import { MapUploadForm } from '../MapUploadForm'
 import { Plus } from 'lucide-react'
 
-type Props = {}
+interface Props { }
 
-const UploadDialog = (props: Props) => {
+const UploadDialog = (_props: Props) => {
   return (
     <Dialog>
       <DialogTrigger asChild>

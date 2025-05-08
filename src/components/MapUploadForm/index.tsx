@@ -113,7 +113,7 @@ export function MapUploadForm() {
         <FormField
           control={form.control}
           name="image"
-          render={({ field: { onChange, ...field } }) => (
+          render={({ field: { onChange, ..._field } }) => (
             <FormItem>
               <FormLabel>Map Image</FormLabel>
               <FormControl>

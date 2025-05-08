@@ -1,12 +1,13 @@
 import React from 'react'
 import { ModeToggle } from '../ModeToggle'
+import type { Session } from 'next-auth';
 import clsx from 'clsx';
 
 import Link from 'next/link';
 import UploadDialog from '../UploadDialog';
 
 interface Props {
-  session: any;
+  session: Session | null;
   isDM: boolean;
 }
 

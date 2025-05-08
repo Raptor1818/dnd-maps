@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     where: { id: Number(id) },
   });
 
-  if (!map || !map.image_url) {
+  if (!map?.image_url) {
     res.status(404).send("Not found");
     return;
   }

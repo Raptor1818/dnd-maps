@@ -5,6 +5,10 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  images: {
+    remotePatterns: [new URL(process.env.NEXT_PUBLIC_SUPABASE_NEXT_CONFIG_URL || "")],
+  }
+};
 
 export default config;

@@ -16,7 +16,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@/trpc/react";
 import { useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { uploadMapImage } from "@/utils/supabaseHandler";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -47,23 +47,14 @@ export function MapUploadForm() {
       setUploading(true);
 
       const filePath = `${Date.now()}-${values.image.name}`;
-      const { error } = await supabase.storage
-        .from("dnd-maps")
-        .upload(filePath, values.image, {
-          cacheControl: "3600",
-          upsert: false,
-        });
 
-      if (error) throw error;
-
-      const publicUrl = supabase.storage
-        .from("dnd-maps")
-        .getPublicUrl(filePath).data.publicUrl;
+      const publicUrl = await uploadMapImage(values.image, filePath);
 
       await uploadMap.mutateAsync({
         name: values.name,
         description: values.description ?? "",
         image_url: publicUrl,
+        image_generated_name: filePath,
         visible: false,
         createdAt: new Date(),
       });

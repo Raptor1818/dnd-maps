@@ -6,6 +6,7 @@ export type MapType = {
   name: string;
   description: string | null;
   image_url: string;
+  image_generated_name: string;
   visible: boolean;
   createdAt: Date;
 }
@@ -20,6 +21,7 @@ export const mapRouter = createTRPCRouter({
         name: z.string(),
         description: z.string().optional(),
         image_url: z.string().url(),
+        image_generated_name: z.string(),
         visible: z.boolean(),
         createdAt: z.date(),
       })
@@ -30,6 +32,7 @@ export const mapRouter = createTRPCRouter({
           name: input.name,
           description: input.description,
           image_url: input.image_url,
+          image_generated_name: input.image_generated_name,
           visible: input.visible,
           createdAt: input.createdAt,
         },
@@ -43,26 +46,13 @@ export const mapRouter = createTRPCRouter({
         name: true,
         description: true,
         image_url: true,
+        image_generated_name: true,
         visible: true,
         createdAt: true,
       },
       orderBy: { createdAt: "desc" },
     });
   }),
-
-  deleteMap: publicProcedure
-    .input(
-      z.object({
-        id: z.number(),
-      })
-    )
-    .mutation(async ({ input, ctx }) => {
-      await ctx.db.map.delete({
-        where: {
-          id: input.id,
-        },
-      });
-    }),
 
   editVisibilityMap: publicProcedure
     .input(
@@ -81,4 +71,18 @@ export const mapRouter = createTRPCRouter({
         },
       });
     }),
+
+  deleteMap: publicProcedure
+    .input(
+      z.object({
+        id: z.number(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      await ctx.db.map.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    })
 });

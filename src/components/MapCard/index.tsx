@@ -120,7 +120,7 @@ const MapCard = ({ map, isDM }: Props) => {
                   </form>
                 </Form>
 
-                <DeleteButton mapId={map.id} />
+                <DeleteButton mapId={map.id} map_generated_name={map.image_generated_name} />
 
               </DropdownMenuContent>
             </DropdownMenu>

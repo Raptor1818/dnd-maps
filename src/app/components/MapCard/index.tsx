@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useMemo, useState } from 'react'
 import Image from 'next/image'
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Skeleton } from "@/components/ui/skeleton"
 import type { MapType } from '@/server/api/routers/map'
 
 import {
@@ -19,34 +20,41 @@ interface Props {
 }
 
 const MapCard = ({ map, isDM }: Props) => {
-  function byteArrayToImage(byteArray: Uint8Array, mimeType: string): string {
-    const blob = new Blob([byteArray], { type: mimeType });
-    return URL.createObjectURL(blob);
-  }
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const base64ImageSrc = useMemo(() => {
+    const binary = map.image.reduce((acc, byte) => acc + String.fromCharCode(byte), "");
+    const base64 = typeof window !== "undefined" ? btoa(binary) : "";
+    return `data:image/webp;base64,${base64}`;
+  }, [map.image]);
 
   return (
-    <Card>
+    <Card className="w-[80vw] md:w-[30vw]">
       <CardHeader>
-        <CardTitle><h1>{map.name}</h1></CardTitle>
+        <CardTitle className="text-lg">{map.name}</CardTitle>
         <CardDescription>{map.description}</CardDescription>
       </CardHeader>
+
       <CardContent>
-        <AspectRatio ratio={16 / 9}>
+        <AspectRatio ratio={16 / 9} className="w-full">
+          {!imageLoaded && <Skeleton className="w-full h-full rounded-sm" />}
           <Image
-            src={byteArrayToImage(map.image, "image/webp")}
+            src={base64ImageSrc}
             alt={map.name}
             fill
-            className="object-cover rounded-sm"
+            onLoad={() => setImageLoaded(true)}
+            className={`object-cover rounded-sm transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
           />
         </AspectRatio>
       </CardContent>
+
       {isDM && (
         <CardFooter>
           <div className="flex items-center space-x-2">
-            <Checkbox id="visible" checked={map.visible} />
+            <Checkbox id={`visible-${map.id}`} checked={map.visible} />
             <label
-              htmlFor="visible"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              htmlFor={`visible-${map.id}`}
+              className="text-sm font-medium leading-none"
             >
               Visibile
             </label>
@@ -54,7 +62,7 @@ const MapCard = ({ map, isDM }: Props) => {
         </CardFooter>
       )}
     </Card>
-  )
+  );
 }
 
-export default MapCard
+export default MapCard;

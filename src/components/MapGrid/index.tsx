@@ -20,6 +20,7 @@ export default function MapGrid({ isDM }: { isDM: boolean }) {
   return (
     <div className="gap-4 grid grid-cols-1 md:grid-cols-3">
       {data?.map((map) => (
+        map.visible || isDM &&
         <MapCard key={map.id} map={map} isDM={isDM} />
       ))}
     </div>

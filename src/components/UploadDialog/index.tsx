@@ -15,7 +15,7 @@ const UploadDialog = (_props: Props) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button><Plus /></Button>
+        <Button className='cursor-pointer'><Plus /></Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogTitle>Aggiungi Mappa</DialogTitle>

@@ -15,12 +15,13 @@ datasource db {
 }
 
 model Map {
-    id          Int      @id @default(autoincrement())
-    name        String
-    description String?
-    image_url   String
-    visible     Boolean
-    createdAt   DateTime @default(now())
+    id                   Int      @id @default(autoincrement())
+    name                 String
+    description          String?
+    image_url            String
+    image_generated_name String
+    visible              Boolean
+    createdAt            DateTime @default(now())
 
     @@index([name])
 }

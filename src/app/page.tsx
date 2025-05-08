@@ -1,6 +1,6 @@
 import { auth } from "@/server/auth";
-import Navbar from "./components/Navbar";
-import MapGrid from "./components/MapGrid";
+import Navbar from "@/components/Navbar";
+import MapGrid from "@/components/MapGrid";
 
 export default async function Home() {
   const session = await auth();

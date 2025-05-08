@@ -22,11 +22,6 @@ interface Props {
 const MapCard = ({ map, isDM }: Props) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  const base64ImageSrc = useMemo(() => {
-    const binary = map.image.reduce((acc, byte) => acc + String.fromCharCode(byte), "");
-    const base64 = typeof window !== "undefined" ? btoa(binary) : "";
-    return `data:image/webp;base64,${base64}`;
-  }, [map.image]);
 
   return (
     <Card className="w-[80vw] md:w-[30vw]">
@@ -39,7 +34,7 @@ const MapCard = ({ map, isDM }: Props) => {
         <AspectRatio ratio={16 / 9} className="w-full">
           {!imageLoaded && <Skeleton className="w-full h-full rounded-sm" />}
           <Image
-            src={base64ImageSrc}
+            src={map.image_url}
             alt={map.name}
             fill
             onLoad={() => setImageLoaded(true)}

@@ -2,8 +2,8 @@
 CREATE TABLE "Map" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
-    "image" BYTEA NOT NULL,
+    "description" TEXT,
+    "image_url" TEXT NOT NULL,
     "visible" BOOLEAN NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

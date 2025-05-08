@@ -4,35 +4,34 @@ import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 export type MapType = {
   id: number;
   name: string;
-  description: string;
-  image: Uint8Array;
+  description: string | null;
+  image_url: string;
   visible: boolean;
   createdAt: Date;
 }
 
-
+// TODO upload to supabase
 export const mapRouter = createTRPCRouter({
-  uploadMap: publicProcedure
-    .input(z.object({
-      name: z.string(),
-      description: z.string(),
-      imageBase64: z.string(),
-      visible: z.boolean(),
-      createdAt: z.date(),
-    }))
-    .mutation(async ({ ctx, input }) => {
-      const buffer = Buffer.from(input.imageBase64?.split(",")[1] ?? "", "base64");
+  // uploadMap: publicProcedure
+  //   .input(z.object({
+  //     name: z.string(),
+  //     description: z.string(),
+  //     image_url: z.string(),
+  //     visible: z.boolean(),
+  //     createdAt: z.date(),
+  //   }))
+  //   .mutation(async ({ ctx, input }) => {
 
-      return await ctx.db.map.create({
-        data: {
-          name: input.name,
-          description: input.description,
-          image: buffer,
-          visible: input.visible,
-          createdAt: new Date(),
-        },
-      });
-    }),
+  //     return await ctx.db.map.create({
+  //       data: {
+  //         name: input.name,
+  //         description: input.description,
+  //         image: input.image,
+  //         visible: input.visible,
+  //         createdAt: new Date(),
+  //       },
+  //     });
+  //   }),
 
   getAllMaps: publicProcedure.query(async ({ ctx }) => {
     return await ctx.db.map.findMany({
@@ -40,7 +39,7 @@ export const mapRouter = createTRPCRouter({
         id: true,
         name: true,
         description: true,
-        image: true,
+        image_url: true,
         visible: true,
         createdAt: true,
       },

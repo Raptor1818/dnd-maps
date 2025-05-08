@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { string, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@/trpc/react";
 
@@ -29,27 +29,26 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export function MapUploadForm() {
-  const uploadMap = api.map.uploadMap.useMutation();
+  //const uploadMap = api.map.uploadMap.useMutation();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       description: "",
-      image: undefined as unknown as File,
+      //image: undefined as unknown as File,
     },
   });
 
   // Submit handler
   const onSubmit = async (values: FormValues) => {
-    const base64 = await toBase64(values.image);
-    uploadMap.mutate({
-      name: values.name,
-      description: values.description ?? "",
-      visible: false,
-      createdAt: new Date(),
-      imageBase64: base64,
-    });
+    // uploadMap.mutate({
+    //   name: values.name,
+    //   description: values.description ?? "",
+    //   visible: false,
+    //   createdAt: new Date(),
+    //   image_url: string,
+    // });
   };
 
   // Convert to base64
@@ -93,7 +92,7 @@ export function MapUploadForm() {
             </FormItem>
           )}
         />
-        <FormField
+        {/* <FormField
           control={form.control}
           name="image"
           render={({ field: { onChange, ...field } }) => (
@@ -111,7 +110,7 @@ export function MapUploadForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         <Button type="submit">Upload Map</Button>
       </form>
     </Form>

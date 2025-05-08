@@ -5,7 +5,7 @@ import MapGrid from "@/components/MapGrid";
 export default async function Home() {
   const session = await auth();
 
-  const isDM = session?.user.id === process.env.DM_ID;
+  const isDM = session?.user.email === process.env.DM_ID;
 
   return (
     <>

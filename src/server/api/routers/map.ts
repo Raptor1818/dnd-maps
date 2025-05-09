@@ -39,20 +39,23 @@ export const mapRouter = createTRPCRouter({
       });
     }),
 
-  getAllMaps: publicProcedure.query(async ({ ctx }) => {
-    return await ctx.db.map.findMany({
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        image_url: true,
-        image_generated_name: true,
-        visible: true,
-        createdAt: true,
-      },
-      orderBy: { createdAt: "desc" },
-    });
-  }),
+  getAllMaps: publicProcedure
+    .input(z.object({ includeInvisible: z.boolean() }))
+    .query(async ({ input, ctx }) => {
+      return await ctx.db.map.findMany({
+        where: input.includeInvisible ? {} : { visible: true },
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          image_url: true,
+          image_generated_name: true,
+          visible: true,
+          createdAt: true,
+        },
+        orderBy: { createdAt: "desc" },
+      });
+    }),
 
   editVisibilityMap: publicProcedure
     .input(

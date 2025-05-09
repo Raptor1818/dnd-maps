@@ -6,7 +6,7 @@ import MapCard from "../MapCard";
 
 
 export default function MapGrid({ isDM }: { isDM: boolean }) {
-  const { data, isLoading } = api.map.getAllMaps.useQuery();
+  const { data, isLoading } = api.map.getAllMaps.useQuery({ includeInvisible: isDM });
 
   if (isLoading) {
     return (

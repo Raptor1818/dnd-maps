@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { DropdownMenuItem, DropdownMenuShortcut } from '../ui/dropdown-menu'
 import { Loader2, Trash } from 'lucide-react'
 import { api } from "@/trpc/react";
 import { deleteMapImage } from '@/utils/supabaseHandler';

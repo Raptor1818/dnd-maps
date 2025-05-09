@@ -24,7 +24,7 @@ export const MapProvider: React.FC<MapProviderProps> = ({ children, includeInvis
   );
 
   return (
-    <MapContext.Provider value={{ data: data || [], isLoading, refetch }}>
+    <MapContext.Provider value={{ data: data ?? [], isLoading, refetch: () => refetch() }}>
       {children}
     </MapContext.Provider>
   );

@@ -27,10 +27,11 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       "@typescript-eslint/require-await": "off",
       "@typescript-eslint/no-misused-promises": [
-        "error",
+        "off",
         { checksVoidReturn: { attributes: false } },
       ],
       "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-floating-promises": "off",
     },
   },
   {

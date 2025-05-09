@@ -19,8 +19,7 @@ interface MapProviderProps {
 
 export const MapProvider: React.FC<MapProviderProps> = ({ children, includeInvisible }) => {
   const { data, isLoading, refetch } = api.map.getAllMaps.useQuery(
-    { includeInvisible },
-    { refetchOnWindowFocus: false }
+    { includeInvisible }
   );
 
   return (

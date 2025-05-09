@@ -9,23 +9,24 @@ import UploadDialog from "../UploadDialog";
 import { useMapContext } from "@/context/MapContext";
 import { Loader2, RefreshCw } from "lucide-react";
 import { Button } from "../ui/button";
+import NavbarWrapper from "../NavbarWrapper";
 
 interface Props {
   session: Session | null;
   isDM: boolean;
 }
 
-const Navbar = ({ session, isDM }: Props) => {
+const HomeNavbar = ({ session, isDM }: Props) => {
   const { isLoading, refetch } = useMapContext();
 
   return (
-    <nav className="z-[100] fixed w-full bg-background border border-x-0 border-t-0 border-b-border px-4 py-2 md:px-8 md:py-4 flex items-center justify-between">
+    <NavbarWrapper>
       <ModeToggle />
       <Button
         onClick={() => refetch()}
         disabled={isLoading}
       >
-        {isLoading ? <Loader2 className="animate-spin inline-block" /> : <RefreshCw />}{" "}Reload Maps
+        {isLoading ? <Loader2 className="animate-spin inline-block" /> : <RefreshCw />}{" "}Refresha mappe
       </Button>
       <div className="flex items-center gap-2">
         {isDM && <UploadDialog />}
@@ -39,8 +40,8 @@ const Navbar = ({ session, isDM }: Props) => {
           {session ? "Sign out" : "Sign in"}
         </Link>
       </div>
-    </nav>
+    </NavbarWrapper>
   );
 };
 
-export default Navbar;
+export default HomeNavbar;

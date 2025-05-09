@@ -1,7 +1,8 @@
 import { auth } from "@/server/auth";
-import Navbar from "@/components/Navbar";
+import HomeNavbar from "@/components/HomeNavbar";
 import MapGrid from "@/components/MapGrid";
 import ClientMapProvider from "@/providers/ClientMapProvider";
+import MainWrapper from "@/components/MainWrapper";
 
 export default async function Home() {
   const session = await auth();
@@ -10,10 +11,10 @@ export default async function Home() {
 
   return (
     <ClientMapProvider includeInvisible={isDM}>
-      <Navbar session={session} isDM={isDM} />
-      <main className="w-full h-full flex flex-col justify-center items-center pt-18 md:pt-22 pb-8 px-4 md:px-8 overflow-scroll">
+      <HomeNavbar session={session} isDM={isDM} />
+      <MainWrapper>
         <MapGrid isDM={isDM} />
-      </main>
+      </MainWrapper>
     </ClientMapProvider>
   );
 }

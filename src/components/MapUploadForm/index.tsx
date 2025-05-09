@@ -61,9 +61,7 @@ export function MapUploadForm() {
         visible: false,
         createdAt: new Date(),
       });
-
       form.reset();
-      alert("Map uploaded successfully!");
     } catch (e) {
       console.error(e);
       alert("Upload failed.");
@@ -77,16 +75,20 @@ export function MapUploadForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 max-w-md mx-auto"
+        className="space-y-6 w-full mx-auto"
       >
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Map Name</FormLabel>
+              <FormLabel>Nome mappa</FormLabel>
               <FormControl>
-                <Input placeholder="Dungeon of Doom" {...field} />
+                <Input
+                  id="name"
+                  placeholder="Dungeon of Doom"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -97,9 +99,13 @@ export function MapUploadForm() {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>Descrizione</FormLabel>
               <FormControl>
-                <Input placeholder="Optional description..." {...field} />
+                <Input
+                  id="description"
+                  placeholder="Optional description..."
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -110,9 +116,10 @@ export function MapUploadForm() {
           name="image"
           render={({ field: { onChange, ..._field } }) => (
             <FormItem>
-              <FormLabel>Map Image</FormLabel>
+              <FormLabel>Immagine</FormLabel>
               <FormControl>
                 <Input
+                  id="image-file"
                   type="file"
                   accept="image/*"
                   onChange={(e) =>
@@ -124,7 +131,7 @@ export function MapUploadForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={uploading}>
+        <Button type="submit" disabled={uploading} className="w-full">
           {uploading ? "Uploading..." : "Upload Map"}
         </Button>
       </form>

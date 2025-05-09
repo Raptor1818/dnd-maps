@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { DropdownMenuItem, DropdownMenuShortcut } from '../ui/dropdown-menu'
-import { Trash } from 'lucide-react'
+import { Loader2, Trash } from 'lucide-react'
 import { api } from "@/trpc/react";
 import { deleteMapImage } from '@/utils/supabaseHandler';
 
@@ -26,15 +26,31 @@ interface Props {
 const DeleteButton = ({ mapId, map_generated_name }: Props) => {
   const { mutateAsync: deleteMap } = api.map.deleteMap.useMutation();
 
-  // non va magari togli il dropdown e metti le icone
+  const [isBeingDeleted, setIsBeingDeleted] = useState(false);
+
+  const handleDeletion = async () => {
+    try {
+      setIsBeingDeleted(true)
+      await deleteMap({ id: mapId })
+      deleteMapImage(map_generated_name)
+      setIsBeingDeleted(false)
+    } catch (e) {
+      console.error(e)
+      setIsBeingDeleted(false)
+      if (e instanceof Error) {
+        alert(e.message)
+      }
+    }
+  }
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
           variant={"destructive"}
+          disabled={isBeingDeleted}
         >
-          <Trash />
+          {isBeingDeleted ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash />}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -47,11 +63,10 @@ const DeleteButton = ({ mapId, map_generated_name }: Props) => {
         <AlertDialogFooter>
           <AlertDialogCancel>No dei</AlertDialogCancel>
           <AlertDialogAction
-            onClick={() => {
-              deleteMap({ id: mapId })
-              deleteMapImage(map_generated_name)
-            }}
-          >Si ah</AlertDialogAction>
+            onClick={async () => { await handleDeletion() }}
+          >
+            Si ah
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

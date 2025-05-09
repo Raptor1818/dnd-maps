@@ -6,12 +6,6 @@ import Link from "next/link"
 import MainWrapper from "@/components/MainWrapper"
 import ImageContainer from "@/components/ImageContainer"
 
-type Props = {
-  params: {
-    id: string
-  }
-}
-
 export default async function MapPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const mapId = Number(id)

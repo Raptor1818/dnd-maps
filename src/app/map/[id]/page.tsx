@@ -3,7 +3,6 @@ import { api } from "@/trpc/server"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import NavbarWrapper from "@/components/NavbarWrapper"
 import MainWrapper from "@/components/MainWrapper"
 import ImageContainer from "@/components/ImageContainer"
 

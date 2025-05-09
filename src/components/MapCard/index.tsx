@@ -19,6 +19,7 @@ import { api } from "@/trpc/react";
 import DeleteButton from './DeleteButton'
 import clsx from 'clsx'
 import { Button } from '../ui/button'
+import { useMapContext } from '@/context/MapContext'
 
 interface Props {
   map: MapType;
@@ -30,6 +31,8 @@ const MapCard = ({ map, isDM }: Props) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [databaseActionLoading, setDatabaseActionLoading] = useState(false);
 
+  const { refetch } = useMapContext();
+
   const editVisibility = api.map.editVisibilityMap.useMutation();
 
   const VisibilityOnChange = async () => {
@@ -39,12 +42,13 @@ const MapCard = ({ map, isDM }: Props) => {
         id: map.id,
         visible: !map.visible,
       });
-      alert("Map visiblity edited successfully!");
     } catch (e) {
       console.error(e);
       alert("Error editing map visiblity");
+    } finally {
+      setDatabaseActionLoading(false);
+      refetch();
     }
-    setDatabaseActionLoading(false);
   };
 
   return (

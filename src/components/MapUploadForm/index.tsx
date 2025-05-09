@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@/trpc/react";
 import { useState } from "react";
 import { uploadMapImage } from "@/utils/supabaseHandler";
+import { useMapContext } from "@/context/MapContext";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -30,6 +31,8 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export function MapUploadForm() {
+  const { refetch } = useMapContext();
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -66,6 +69,7 @@ export function MapUploadForm() {
       alert("Upload failed.");
     } finally {
       setUploading(false);
+      refetch()
     }
   };
 

@@ -1,12 +1,15 @@
 "use client";
 
-import { api } from "@/trpc/react";
 import { Loader2 } from "lucide-react";
 import MapCard from "../MapCard";
+import { useMapContext } from "@/context/MapContext";
 
+interface Props {
+  isDM: boolean;
+}
 
-export default function MapGrid({ isDM }: { isDM: boolean }) {
-  const { data, isLoading } = api.map.getAllMaps.useQuery({ includeInvisible: isDM });
+export default function MapGrid({ isDM }: Props) {
+  const { data, isLoading } = useMapContext();
 
   if (isLoading) {
     return (
@@ -19,8 +22,7 @@ export default function MapGrid({ isDM }: { isDM: boolean }) {
 
   return (
     <div className="gap-4 grid grid-cols-1 md:grid-cols-3">
-      {data?.map((map) => (
-        (map.visible || isDM) &&
+      {data.map((map) => (
         <MapCard key={map.id} map={map} isDM={isDM} />
       ))}
     </div>

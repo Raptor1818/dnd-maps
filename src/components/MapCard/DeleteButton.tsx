@@ -16,6 +16,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from '../ui/button';
+import { useMapContext } from '@/context/MapContext';
 
 
 interface Props {
@@ -28,18 +29,22 @@ const DeleteButton = ({ mapId, map_generated_name }: Props) => {
 
   const [isBeingDeleted, setIsBeingDeleted] = useState(false);
 
+  const { refetch } = useMapContext();
+
   const handleDeletion = async () => {
     try {
       setIsBeingDeleted(true)
       await deleteMap({ id: mapId })
       deleteMapImage(map_generated_name)
-      setIsBeingDeleted(false)
     } catch (e) {
       console.error(e)
       setIsBeingDeleted(false)
       if (e instanceof Error) {
         alert(e.message)
       }
+    } finally {
+      setIsBeingDeleted(false)
+      refetch()
     }
   }
 

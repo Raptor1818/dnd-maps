@@ -20,19 +20,16 @@ export default async function MapPage({ params }: PageProps) {
 
   return (
     <>
-      <NavbarWrapper>
+      <nav className="fixed flex flex-row justify-between top-0 left-0 w-full h-fit p-2">
         <Link href="/">
-          <Button>
+          <Button size={"sm"}>
             <ArrowLeft className="mr-2 h-4 w-4" />
             Indrio
           </Button>
         </Link>
-      </NavbarWrapper>
-      <MainWrapper>
-        <div className="w-full flex flex-col items-start justify-start gap-2 mb-4">
-          <h1>{map.name}</h1>
-          <p className="text-neutral-300">{map.description}</p>
-        </div>
+        <h2>{map.name}</h2>
+      </nav>
+      <MainWrapper className="md:pt-12! md:px-16! pb-0!">
         <ImageContainer map={map} />
       </MainWrapper>
     </>

@@ -1,3 +1,4 @@
+// app/map/[id]/page.tsx
 import { notFound } from "next/navigation"
 import { api } from "@/trpc/server"
 import { Button } from "@/components/ui/button"
@@ -6,16 +7,19 @@ import Link from "next/link"
 import MainWrapper from "@/components/MainWrapper"
 import ImageContainer from "@/components/ImageContainer"
 
-
-interface PageProps {
-  params: { id: string }
+type Props = {
+  params: {
+    id: string
+  }
 }
 
-export default async function MapPage({ params }: PageProps) {
-  const mapId = Number(params.id)
+export default async function MapPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const mapId = Number(id)
+  if (isNaN(mapId)) return notFound()
+
   const map = await api.map.getOneMap(mapId)
   if (!map) return notFound()
-
 
   return (
     <>
@@ -36,4 +40,3 @@ export default async function MapPage({ params }: PageProps) {
     </>
   )
 }
-

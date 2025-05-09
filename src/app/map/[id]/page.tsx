@@ -29,8 +29,10 @@ export default async function MapPage({ params }: PageProps) {
         </Link>
         <h2>{map.name}</h2>
       </nav>
-      <MainWrapper className="md:pt-12! md:px-16! pb-0!">
+      <MainWrapper className="md:pt-12! md:px-16! pb-0! h-screen">
+        <p className="md:hidden text-lg font-semibold pb-4">Metti in full e ruota il dispositivo, vecio</p>
         <ImageContainer map={map} />
+        <p className="md:hidden select-none text-background text-lg font-semibold pb-4">Metti in full e ruota il dispositivo, vecio</p>
       </MainWrapper>
     </>
   )

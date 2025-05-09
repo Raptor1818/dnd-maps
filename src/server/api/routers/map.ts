@@ -57,6 +57,14 @@ export const mapRouter = createTRPCRouter({
       });
     }),
 
+  getOneMap: publicProcedure
+    .input(z.number())
+    .query(({ ctx, input }) => {
+      return ctx.db.map.findUnique({
+        where: { id: input },
+      });
+    }),
+
   editVisibilityMap: publicProcedure
     .input(
       z.object({

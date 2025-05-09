@@ -2,7 +2,6 @@
 
 import React from "react";
 import { ModeToggle } from "../ModeToggle";
-import type { Session } from "next-auth";
 
 import UploadDialog from "../UploadDialog";
 import { useMapContext } from "@/context/MapContext";

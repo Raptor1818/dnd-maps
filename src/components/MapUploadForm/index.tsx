@@ -18,6 +18,7 @@ import { api } from "@/trpc/react";
 import { useState } from "react";
 import { uploadMapImage } from "@/utils/supabaseHandler";
 import { useMapContext } from "@/context/MapContext";
+import { convertToWebP } from "@/utils/convertToWebP";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -49,9 +50,11 @@ export function MapUploadForm() {
     try {
       setUploading(true);
 
-      const filePath = `${Date.now()}-${values.image.name}`;
+      const webpImage = await convertToWebP(values.image)
+      const filePath = `${Date.now()}-${webpImage.name}`
 
-      const publicUrl = await uploadMapImage(values.image, filePath);
+      const publicUrl = await uploadMapImage(webpImage, filePath)
+
 
       await uploadMap.mutateAsync({
         name: values.name,

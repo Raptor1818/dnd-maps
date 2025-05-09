@@ -1,4 +1,3 @@
-// app/map/[id]/page.tsx
 import { notFound } from "next/navigation"
 import { api } from "@/trpc/server"
 import { Button } from "@/components/ui/button"

@@ -11,7 +11,7 @@ export default async function Home() {
 
   return (
     <ClientMapProvider includeInvisible={isDM}>
-      <HomeNavbar isDM={isDM} />
+      <HomeNavbar isDM={isDM} session={session} />
       <MainWrapper>
         <MapGrid isDM={isDM} />
       </MainWrapper>

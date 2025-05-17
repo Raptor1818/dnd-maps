@@ -16,7 +16,7 @@ export default async function MapPage({ params }: { params: Promise<{ id: string
 
   return (
     <>
-      <nav className="fixed flex flex-row justify-between top-0 left-0 w-full h-fit p-2">
+      <nav className="fixed flex flex-row justify-between top-0 left-0 w-full h-fit p-2 z-50">
         <Link href="/">
           <Button size={"sm"}>
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -25,11 +25,7 @@ export default async function MapPage({ params }: { params: Promise<{ id: string
         </Link>
         <h2>{map.name}</h2>
       </nav>
-      <MainWrapper className="md:pt-12! md:px-16! pb-0! h-screen">
-        <p className="md:hidden text-lg font-semibold pb-4">Metti in full e ruota il dispositivo, vecio</p>
-        <ImageContainer map={map} />
-        <p className="md:hidden select-none text-background text-lg font-semibold pb-4">Metti in full e ruota il dispositivo, vecio</p>
-      </MainWrapper>
+      <ImageContainer map={map} />
     </>
   )
 }
